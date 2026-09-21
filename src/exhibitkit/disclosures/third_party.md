@@ -1,0 +1,2 @@
+# Third-party works
+Academic and practitioner works are cited for context. $Entity is not affiliated with their authors or publishers, and the summaries given here are $entity's own and may not reflect those works' full findings. Where a quotation is taken from a secondary summary rather than the original text, the reader should consult the original. Trademarks and fund names are the property of their owners.

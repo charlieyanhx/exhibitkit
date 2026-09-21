@@ -1,0 +1,2 @@
+# No affiliation; format
+This document adopts layout conventions common to sell-side research publications — numbered exhibits, running headers, a disclosure appendix — because they aid readability. $Entity is not affiliated with, endorsed by, or acting on behalf of any bank, broker-dealer or research provider, and this document is not a research report of any such institution and should not be mistaken for one.

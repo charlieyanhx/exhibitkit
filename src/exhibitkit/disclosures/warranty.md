@@ -1,0 +1,2 @@
+# No warranty; limitation of liability
+This document is provided "as is" without warranty of any kind, express or implied, including any warranty of accuracy, completeness, merchantability or fitness for a particular purpose. To the fullest extent permitted by law, $entity shall not be liable for any direct, indirect, incidental, consequential or other loss arising from the use of, or reliance on, this document or its contents.

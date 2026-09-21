@@ -1,0 +1,17 @@
+name: navy
+description: Sell-side house style — navy chrome, serif body, sans headings.
+colors:
+  primary: "#12305A"
+  accent: "#12305A"
+  ink: "#1A1A1A"
+  slate: "#5A5F66"
+  panel: "#EEF1F5"
+  rule: "#C9CED6"
+fonts:
+  main: [Georgia, Charter, "TeX Gyre Pagella"]
+  sans: ["Helvetica Neue", Helvetica, Arial, "TeX Gyre Heros"]
+  mono: [Menlo, "DejaVu Sans Mono", "TeX Gyre Cursor"]
+chart:
+  series: ["#2A5DA8", "#E0742A", "#12A37E", "#8B6CC7"]
+  neutral: "#B9BEC5"
+  grid: "#D9DCE0"

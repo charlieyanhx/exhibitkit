@@ -1,0 +1,2 @@
+# Opinions and forward-looking statements
+The views, estimates and characterizations of market mechanisms in this document are $entity's opinions as of the date shown, are subject to change without notice, and may prove to be wrong. Statements about what a market feature "will" do or what an indicator implies are forward-looking, are based on an interpretation of past data, and are not predictions or guarantees. $Entity undertakes no obligation to update this document.

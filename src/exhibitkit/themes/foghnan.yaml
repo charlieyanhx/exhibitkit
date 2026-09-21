@@ -1,0 +1,24 @@
+name: foghnan
+description: Fóghnan Trading brand — deep plum chrome with lavender accents, gold and teal in charts.
+credit: "Research assisted and accelerated by Silkcodex, by Fóghnan Trading."
+brand:
+  name: Fóghnan Trading
+  font: ["Alfa Slab One", Rockwell, "TeX Gyre Bonum"]   # the website wordmark face; shipped under assets/fonts (OFL)
+  font_file: assets/fonts/AlfaSlabOne-Regular.ttf
+  ink: "#FAFAFA"
+  rule: "#C9A24D"   # the gold rule under the masthead band
+colors:
+  primary: "#301933"
+  accent: "#7B4F86"
+  ink: "#1A1A1A"
+  slate: "#5A5F66"
+  panel: "#F1EEF4"
+  rule: "#CFC6D6"
+fonts:
+  main: [Charter, Georgia, "TeX Gyre Pagella"]
+  sans: [Jost, Poppins, "Helvetica Neue", Helvetica, "TeX Gyre Heros"]
+  mono: [Menlo, "DejaVu Sans Mono", "TeX Gyre Cursor"]
+chart:
+  series: ["#6B3F78", "#B07410", "#1A9EB0", "#C24E7A"]
+  neutral: "#B9BEC5"
+  grid: "#DDD7E0"

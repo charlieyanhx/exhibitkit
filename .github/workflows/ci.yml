@@ -1,0 +1,28 @@
+name: ci
+on:
+  push:
+    branches: [main]
+  pull_request:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.11", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      # pandoc + XeTeX + the TeX Gyre fallback fonts the themes end on; fontconfig for fc-list
+      - run: sudo apt-get update -qq && sudo apt-get install -y -qq pandoc texlive-xetex texlive-fonts-recommended texlive-latex-extra fontconfig
+      - run: python -m pip install -e ".[dev]"
+      - run: ruff check src tests
+      - run: pytest -q
+      # zero-spend end-to-end: the synthetic demo must build in every theme and pass its own checks
+      - run: |
+          for t in navy foghnan claret; do
+            exhibitkit demo --out /tmp/demo-$t --theme $t
+            exhibitkit check /tmp/demo-$t/demo.md
+          done
+          exhibitkit demo --out /tmp/demo-issue --layout issue --theme foghnan

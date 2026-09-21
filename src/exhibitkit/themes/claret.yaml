@@ -1,0 +1,17 @@
+name: claret
+description: Internal-memo style — claret accents on warm paper tones, serif throughout.
+colors:
+  primary: "#8C2F39"
+  accent: "#8C2F39"
+  ink: "#1A1A1A"
+  slate: "#5A5A5A"
+  panel: "#F4F1EC"
+  rule: "#C9C4BB"
+fonts:
+  main: [Charter, Georgia, "TeX Gyre Pagella"]
+  sans: ["Helvetica Neue", Helvetica, Arial, "TeX Gyre Heros"]
+  mono: [Menlo, "DejaVu Sans Mono", "TeX Gyre Cursor"]
+chart:
+  series: ["#8C2F39", "#2A5DA8", "#B07410", "#12A37E"]
+  neutral: "#B9BEC5"
+  grid: "#DDD9D2"

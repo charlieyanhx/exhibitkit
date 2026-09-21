@@ -1,0 +1,113 @@
+% exhibitkit preamble — filled by string.Template; theme colours and resolved fonts are substituted.
+\PassOptionsToPackage{table}{xcolor}
+\documentclass[$ptsize]{extarticle}
+% Asymmetric page: a 4.95in text block with a 1.65in margin column for pull-quotes and key numbers;
+% exhibits span both (6.88in). Letter paper.
+\usepackage[$geometry]{geometry}
+\usepackage{fontspec}
+\setmainfont{$font_main}
+\setsansfont{$font_sans}
+\setmonofont{$font_mono}[Scale=MatchLowercase]
+$brandfont
+\usepackage{amsmath,amssymb,booktabs,graphicx,xcolor,fancyhdr,enumitem,microtype,array,ragged2e,needspace,float,flafter,newunicodechar,marginnote,tocloft,etoolbox,multicol}
+\usepackage[most]{tcolorbox}
+\definecolor{primary}{HTML}{$c_primary}\definecolor{accent}{HTML}{$c_accent}\definecolor{ink}{HTML}{$c_ink}
+\definecolor{slate}{HTML}{$c_slate}\definecolor{panel}{HTML}{$c_panel}\definecolor{rulec}{HTML}{$c_rule}\definecolor{brandink}{HTML}{$c_brandink}
+\usepackage[colorlinks=true,linkcolor=primary,urlcolor=primary,citecolor=primary]{hyperref}
+\newunicodechar{−}{\ensuremath{-}}\newunicodechar{Δ}{\ensuremath{\Delta}}\newunicodechar{≥}{\ensuremath{\geq}}\newunicodechar{≤}{\ensuremath{\leq}}
+\newunicodechar{≈}{\ensuremath{\approx}}\newunicodechar{×}{\ensuremath{\times}}\newunicodechar{→}{\ensuremath{\rightarrow}}\newunicodechar{√}{\ensuremath{\surd}}
+\newunicodechar{σ}{\ensuremath{\sigma}}\newunicodechar{φ}{\ensuremath{\varphi}}\newunicodechar{²}{\ensuremath{^2}}\newunicodechar{÷}{\ensuremath{\div}}\newunicodechar{∝}{\ensuremath{\propto}}\newunicodechar{Σ}{\ensuremath{\Sigma}}
+\providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\providecommand{\pandocbounded}[1]{#1}
+\newlength{\exwidth}\setlength{\exwidth}{\dimexpr\textwidth+\marginparsep+\marginparwidth\relax}
+\setlength{\parskip}{5pt}\setlength{\parindent}{0pt}\linespread{1.12}\color{ink}
+\setlist[itemize]{leftmargin=1.2em,itemsep=2pt,topsep=3pt}\setlist[enumerate]{leftmargin=1.6em,itemsep=4pt,topsep=3pt}
+% running header / footer
+\pagestyle{fancy}\fancyhf{}
+\renewcommand{\headrulewidth}{0.4pt}\renewcommand{\headrule}{\color{rulec}\hrule width\headwidth height 0.4pt}
+\fancyhfoffset[R]{\dimexpr\marginparsep+\marginparwidth\relax}
+\fancyhead[L]{\sffamily\footnotesize\color{slate}$header_left}\fancyhead[R]{\sffamily\footnotesize\color{slate}$date}
+\fancyfoot[L]{\sffamily\scriptsize\color{slate}\rightmark}
+\fancyfoot[C]{\sffamily\scriptsize\color{slate}\thepage}
+\fancyfoot[R]{\sffamily\scriptsize\color{slate}$footer_right}
+\fancypagestyle{plain}{\fancyhf{}\fancyfoot[C]{\sffamily\scriptsize\color{slate}\thepage}\renewcommand{\headrulewidth}{0pt}\renewcommand{\headrule}{}}
+% contents: chapters and exhibits
+\newlistof{exhibit}{loe}{Exhibits}
+\renewcommand{\cfttoctitlefont}{\sffamily\bfseries\Large\color{primary}}\renewcommand{\cftaftertoctitle}{\par\vspace{2pt}{\color{accent}\hrule height 1pt}\vspace{6pt}}
+\renewcommand{\cftloetitlefont}{\sffamily\bfseries\Large\color{primary}}\renewcommand{\cftafterloetitle}{\par\vspace{2pt}{\color{accent}\hrule height 1pt}\vspace{6pt}}
+\renewcommand{\cftpartfont}{\sffamily\bfseries\small\color{accent}}\renewcommand{\cftpartpagefont}{\sffamily\small\color{slate}}\setlength{\cftbeforepartskip}{10pt}
+\renewcommand{\cftsecfont}{\sffamily\normalsize\color{ink}}\renewcommand{\cftsecpagefont}{\sffamily\color{slate}}\renewcommand{\cftsecleader}{\hfill}\setlength{\cftsecindent}{0pt}\setlength{\cftsecnumwidth}{1.6em}\setlength{\cftbeforesecskip}{3pt}
+\renewcommand{\cftexhibitfont}{\sffamily\footnotesize\color{ink}}\renewcommand{\cftexhibitpagefont}{\sffamily\footnotesize\color{slate}}\renewcommand{\cftexhibitleader}{\hfill}\setlength{\cftexhibitindent}{0pt}\setlength{\cftexhibitnumwidth}{2.8em}\setlength{\cftbeforeexhibitskip}{2pt}
+\renewcommand{\cftexhibitpresnum}{Ex.~}
+\setcounter{tocdepth}{1}
+% brand band: wordmark left, unit/series right
+% Cover masthead: a full-bleed band across the top of the page (drawn as a page overlay, so it ignores the margins), the
+% wordmark set on the text block's left edge, the series label tracked out on its right edge, and a brand-colour rule
+% beneath. Needs two passes (remember picture); the build already runs two.
+\definecolor{brandrule}{HTML}{$c_brandrule}
+\newlength{\bandh}\setlength{\bandh}{$bandheight}
+\newcommand{\bandleft}{\dimexpr 1in+\oddsidemargin\relax}
+\newcommand{\bandright}{\dimexpr 1in+\oddsidemargin+\exwidth\relax}
+\newcommand{\brandband}[2]{\noindent\begin{tikzpicture}[remember picture,overlay]
+  \fill[primary] (current page.north west) rectangle ([yshift=-\bandh]current page.north east);
+  \fill[brandrule] ([yshift=-\bandh]current page.north west) rectangle ([yshift=-\bandh-3pt]current page.north east);
+  \node[anchor=west,inner sep=0pt] at ([xshift=\bandleft,yshift=-0.5\bandh]current page.north west) {\brandfont\fontsize{$brandsize}{$brandsize}\selectfont\color{brandink}#1};
+  \node[anchor=east,inner sep=0pt] at ([xshift=\bandright,yshift=-0.5\bandh]current page.north west) {\sffamily\bfseries\fontsize{7.5}{9}\selectfont\addfontfeatures{LetterSpace=18}\color{accent!55!white}\MakeUppercase{#2}};
+\end{tikzpicture}\par}
+\newcommand{\plainband}[2]{\noindent\begin{tikzpicture}[remember picture,overlay]
+  \fill[primary] (current page.north west) rectangle ([yshift=-\bandh]current page.north east);
+  \fill[brandrule] ([yshift=-\bandh]current page.north west) rectangle ([yshift=-\bandh-3pt]current page.north east);
+  \node[anchor=west,inner sep=0pt] at ([xshift=\bandleft,yshift=-0.5\bandh]current page.north west) {\sffamily\bfseries\fontsize{11}{13}\selectfont\addfontfeatures{LetterSpace=14}\color{white}\MakeUppercase{#1}};
+  \node[anchor=east,inner sep=0pt] at ([xshift=\bandright,yshift=-0.5\bandh]current page.north west) {\sffamily\fontsize{8}{10}\selectfont\color{accent!55!white}#2};
+\end{tikzpicture}\par}
+% headings
+\newif\ifpartpage
+\newcommand{\partopen}[2]{\clearpage\thispagestyle{plain}\global\partpagetrue\addcontentsline{toc}{part}{\MakeUppercase{#1}\quad #2}\markright{#1}%
+  \vspace*{0.9in}{\noindent\sffamily\bfseries\footnotesize\color{accent}\MakeUppercase{#1}\par}\vspace{6pt}{\color{accent}\hrule width 1.2in height 1.5pt}\vspace{14pt}%
+  \noindent\hbox to\textwidth{\begin{minipage}{\exwidth}\RaggedRight{\sffamily\bfseries\color{primary}\fontsize{30}{34}\selectfont #2\par}\end{minipage}\hss}\par\vspace{18pt}}
+\newcommand{\chapterhead}[2]{\ifpartpage\clearpage\global\partpagefalse\fi\Needspace{8\baselineskip}\vspace{18pt}%
+  \ifx\\#1\\\addcontentsline{toc}{section}{#2}\markright{#2}\else\addcontentsline{toc}{section}{\protect\numberline{#1}#2}\markright{#1.\ #2}\fi%
+  \noindent\begin{minipage}[b]{\textwidth}\ifx\\#1\\\else{\sffamily\bfseries\fontsize{40}{40}\selectfont\color{accent!40}#1}\hspace{10pt}\fi{\sffamily\bfseries\color{primary}\Large #2}\end{minipage}\par\vspace{3pt}{\color{primary}\hrule height 1pt}\vspace{9pt}}
+\newcommand{\subhead}[1]{\Needspace{4\baselineskip}\vspace{7pt}{\noindent\sffamily\bfseries\color{primary}\normalsize #1\par}\vspace{2pt}}
+% panels
+\newtcolorbox{inthischapter}[1]{enhanced,colback=white,colframe=white,boxrule=0pt,arc=0pt,left=10pt,right=6pt,top=4pt,bottom=4pt,borderline west={2pt}{0pt}{accent},
+  fontupper=\sffamily\small,title={\sffamily\bfseries\scriptsize\color{accent}\MakeUppercase{#1}},attach boxed title to top left={yshift=-2pt,xshift=10pt},boxed title style={colback=white,colframe=white,boxrule=0pt},before skip=6pt,after skip=10pt}
+\newtcolorbox{keybox}[1]{enhanced,colback=panel,colframe=panel,boxrule=0pt,arc=0pt,left=9pt,right=9pt,top=7pt,bottom=6pt,fontupper=\sffamily\small,
+  title={\sffamily\bfseries\footnotesize\color{primary}\MakeUppercase{#1}},attach boxed title to top left={yshift=-2pt,xshift=9pt},boxed title style={colback=panel,colframe=panel,boxrule=0pt},before skip=8pt,after skip=10pt}
+\newtcolorbox{warnbox}{enhanced,colback=white,colframe=primary,boxrule=0.8pt,arc=0pt,left=8pt,right=8pt,top=6pt,bottom=6pt,fontupper=\sffamily\bfseries\scriptsize\color{ink}}
+\newtcolorbox{closingbox}{enhanced,colback=white,colframe=white,boxrule=0pt,arc=0pt,left=14pt,right=0pt,top=8pt,bottom=8pt,borderline west={3pt}{0pt}{accent},fontupper=\itshape\large\color{primary},before skip=14pt,after skip=14pt}
+% margin devices
+\newcommand{\pullquote}[1]{\par\vspace{10pt}\noindent\begin{minipage}{0.9\linewidth}{\color{accent}\rule{1.1in}{1.5pt}}\par\vspace{5pt}{\sffamily\itshape\large\color{primary}\RaggedRight #1\par}\end{minipage}\par\vspace{12pt}}
+\newcommand{\keynumber}[2]{\marginnote{\RaggedRight{\sffamily\bfseries\fontsize{18}{20}\selectfont\color{accent}#1\par}\vspace{2pt}{\sffamily\scriptsize\color{slate}#2\par}}[0pt]}
+\newcommand{\aside}[1]{\marginnote{\RaggedRight{\sffamily\scriptsize\color{slate}#1\par}}[0pt]}
+% exhibits (span text + margin column)
+\renewcommand{\topfraction}{0.95}\renewcommand{\bottomfraction}{0.7}\renewcommand{\textfraction}{0.05}\renewcommand{\floatpagefraction}{0.8}\setcounter{topnumber}{3}\setcounter{totalnumber}{4}
+\newcommand{\exhibithead}[2][]{\refstepcounter{exhibit}\ifx\\#1\\\addcontentsline{loe}{exhibit}{\protect\numberline{\theexhibit}#2}\else\addcontentsline{loe}{exhibit}{\protect\numberline{\theexhibit}#1}\fi%
+  \RaggedRight{\sffamily\bfseries\footnotesize\color{accent}EXHIBIT \theexhibit}\quad{\sffamily\bfseries\small\color{ink}#2\par}\vspace{3pt}{\color{accent}\hrule height 0.6pt}\vspace{6pt}}
+\newenvironment{exhibit}[2][]{\begin{figure}[!htbp]\noindent\hbox to\textwidth\bgroup\begin{minipage}{\exwidth}\exhibithead[#1]{#2}\centering}{\end{minipage}\hss\egroup\end{figure}}
+\newenvironment{exhibitfixed}[2][]{\par\vspace{9pt}\noindent\hbox to\textwidth\bgroup\begin{minipage}{\exwidth}\exhibithead[#1]{#2}\centering}{\end{minipage}\hss\egroup\par\vspace{10pt}}
+\newcommand{\exsource}[1]{\par\vspace{4pt}\RaggedRight{\sffamily\scriptsize\color{slate}Source: #1\par}}
+\newcommand{\exnote}[1]{\par\vspace{3pt}\RaggedRight{\sffamily\scriptsize\color{slate}Note: #1\par}}
+\newenvironment{extabular}[1]{\sffamily\footnotesize\rowcolors{3}{panel}{white}\begin{tabular}{#1}}{\end{tabular}}
+% issue layout: two-column sections with a full-width head and deck; column-width exhibits
+\setlength{\columnsep}{16pt}\setlength{\multicolsep}{6pt}\raggedcolumns
+\newcounter{issuesec}
+\newif\ifsectionpage
+\newcommand{\issuesection}[2]{\ifsectionpage\clearpage\else\par\vspace{14pt}\fi\refstepcounter{issuesec}\label{sec:\theissuesec}\Needspace{9\baselineskip}\markright{#1}%
+  {\noindent\sffamily\bfseries\color{primary}\fontsize{16}{19}\selectfont #1\par}\vspace{3pt}{\color{accent}\hrule height 0.8pt}\vspace{5pt}%
+  \ifx\\#2\\\else{\noindent\sffamily\bfseries\small\color{accent}\RaggedRight #2\par}\vspace{4pt}\fi}
+\newcommand{\issuedeck}[1]{\par{\noindent\sffamily\bfseries\small\color{accent}\RaggedRight #1\par}\vspace{4pt}}
+\newcommand{\claimblock}[2]{\par\vspace{4pt}\noindent{\color{accent}\vrule width 1.5pt}\hspace{6pt}\begin{minipage}[t]{\dimexpr\linewidth-7.5pt\relax}{\sffamily\bfseries\scriptsize\color{accent}\MakeUppercase{#1}\par}\vspace{1pt}#2\end{minipage}\par\vspace{6pt}}
+\newcommand{\caplabel}[1]{\par\vspace{5pt}{\noindent\sffamily\bfseries\scriptsize\color{slate}\MakeUppercase{#1}\par}\vspace{1pt}}
+\newsavebox{\exhibitcolbox}
+% the same exhibit when it is the first thing in a fresh pair of columns: measured at column width before the columns open
+\newcommand{\exhibitcolfirstbegin}[2][]{\par\vspace{7pt}\begin{lrbox}{\exhibitcolbox}\begin{minipage}{\dimexpr(\linewidth-\columnsep)/2\relax}\exhibithead[#1]{#2}\centering}
+\newcommand{\exhibitcolfirstend}{\end{minipage}\end{lrbox}\needspace{\dimexpr\ht\exhibitcolbox+\dp\exhibitcolbox+4pt\relax}\begin{multicols}{2}\noindent\usebox{\exhibitcolbox}\par\vspace{8pt}}
+% column exhibits are measured first so a box taller than the space left in the column moves whole to the next column instead of overflowing the page
+\newenvironment{exhibitcol}[2][]{\par\vspace{7pt}\begin{lrbox}{\exhibitcolbox}\begin{minipage}{\linewidth}\exhibithead[#1]{#2}\centering}{\end{minipage}\end{lrbox}\needspace{\dimexpr\ht\exhibitcolbox+\dp\exhibitcolbox+4pt\relax}\noindent\usebox{\exhibitcolbox}\par\vspace{8pt}}
+\newcommand{\exsubtitle}[1]{\vspace{-4pt}\RaggedRight{\sffamily\scriptsize\color{slate}#1\par}\vspace{4pt}}
+\newcommand{\keynumbercol}[2]{\par\vspace{6pt}\noindent\begin{minipage}{\linewidth}{\color{accent}\rule{0.8in}{1.5pt}}\par\vspace{2pt}{\sffamily\bfseries\fontsize{18}{20}\selectfont\color{accent}#1\par}\vspace{1pt}{\sffamily\scriptsize\color{slate}#2\par}\end{minipage}\par\vspace{8pt}}
+\newtcolorbox{insidebox}{enhanced,colback=white,colframe=primary,boxrule=0.8pt,arc=0pt,left=8pt,right=8pt,top=5pt,bottom=3pt,fontupper=\sffamily\small,before skip=0pt,after skip=8pt}
+\newenvironment{markstable}{\sffamily\footnotesize\renewcommand{\arraystretch}{0.92}\begin{tabular}{@{}p{1.55in}@{}r@{}}}{\end{tabular}}
+$layoutextras
+\begin{document}

@@ -1,0 +1,2 @@
+# Author certification
+I, $author, certify that the views expressed in this document accurately reflect my personal views about the subject matter as of the date shown, and that no part of any compensation I receive was, is, or will be directly or indirectly related to the specific views expressed herein. I am not employed by, and this document was not prepared by, reviewed by, or issued on behalf of, any broker-dealer, investment adviser, bank, exchange, fund sponsor or research department.

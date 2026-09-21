@@ -1,0 +1,2 @@
+# Distribution and intellectual property
+This document may be shared freely provided it is reproduced in full, unaltered, and with this Disclosure Appendix attached. Exhibits may be reproduced with attribution. It is not directed at, and is not intended for distribution to or use by, any person in any jurisdiction where such distribution or use would be contrary to law or regulation. © $year $author.
