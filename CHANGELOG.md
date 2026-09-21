@@ -1,6 +1,7 @@
 # Changelog
 
 ## 0.1.2 — 2026-09-14
+- The filter writes `\includegraphics` for exhibit images itself: pandoc 3.1 (Ubuntu's package) emitted `width=…\textwidth,height=\textheight`, which without `keepaspectratio` stretched every figure to the full text height and added a page to the demo; 3.9 emitted `width=…\linewidth`. The output no longer depends on the pandoc version (found on the first CI run).
 - Issue cover: optional front-matter `headline` — the title with ` | ` where the cover headline should break (`title` stays the plain string for metadata and the contents page).
 - Cover masthead redrawn: a full-bleed band across the top of the page (tikz page overlay, so it ignores the margins) with the wordmark on the text block's left edge, the series label letter-spaced on its right, and a brand-colour rule beneath (`brand.rule`, default = accent; Fóghnan gold `#C9A24D`). Band height and wordmark size are set per layout (primer 0.68in / 25pt, issue 0.62in / 22pt). Both covers pull the title up to sit under the band.
 - Primer cover: sidebar set in `\scriptsize` at 0.39 of the width so the hero, key numbers, takeaways and the conflict box fit on one page.

@@ -17,6 +17,26 @@ local function md2tex(s)
   return (out:gsub('\n+$', ''))
 end
 
+-- The filter writes \includegraphics itself so the output does not depend on the pandoc version:
+-- 3.1 emits `width=0.8\textwidth,height=\textheight` (and, without keepaspectratio, stretches the
+-- figure to the full text height), 3.9 emits `width=0.8\linewidth`. A percentage or a bare fraction
+-- is a share of \linewidth; any other width or height string is passed to graphicx verbatim.
+local function image_tex(img, default_width)
+  local w = img.attributes.width or default_width
+  local opts = {}
+  if w and w ~= '' then
+    if w:match('^[%d%.]+%%$') then
+      opts[#opts + 1] = 'width=' .. string.format('%g', tonumber(w:sub(1, -2)) / 100) .. '\\linewidth'
+    elseif w:match('^[%d%.]+$') then
+      opts[#opts + 1] = 'width=' .. string.format('%g', tonumber(w)) .. '\\linewidth'
+    else
+      opts[#opts + 1] = 'width=' .. w
+    end
+  end
+  if img.attributes.height and img.attributes.height ~= '' then opts[#opts + 1] = 'height=' .. img.attributes.height end
+  return pandoc.RawInline('latex', '\\includegraphics[' .. table.concat(opts, ',') .. ']{' .. img.src .. '}')
+end
+
 local function inlines2tex(inl)
   local out = pandoc.write(pandoc.Pandoc({pandoc.Plain(inl)}), 'latex')
   return (out:gsub('\n+$', ''))
@@ -69,10 +89,7 @@ local function exhibit(el)
     if b.t == 'Table' then
       out[#out + 1] = table_to_tabular(b, a.cols)
     else
-      b = pandoc.walk_block(b, { Image = function(img)
-        if not img.attributes.width and not img.attributes.height then img.attributes.width = width end
-        return img
-      end })
+      b = pandoc.walk_block(b, { Image = function(img) return image_tex(img, width) end })
       out[#out + 1] = b
     end
   end
